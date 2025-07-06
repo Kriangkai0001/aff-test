@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>โพสต์กำลังโหลด...</title>
+  <meta property="og:title" content="โพสต์กำลังโหลด..." id="og-title">
+  <meta property="og:description" content="" id="og-desc">
+  <meta property="og:image" content="" id="og-img">
+  <meta property="og:url" content="" id="og-url">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+</head>
+<body>
+  <div id="post-detail">กำลังโหลด...</div>
+  <script>
+    const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+    const SUPABASE_KEY = 'YOUR_SUPABASE_ANON_KEY';
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    async function loadPost() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const postId = urlParams.get('id');
+        const { data, error } = await supabase
+            .from('posts')
+            .select('*').eq('id', postId).single();
+        const postDetail = document.getElementById('post-detail');
+        if (error || !data) {
+            postDetail.innerHTML = '<h3>ไม่พบโพสต์</h3>';
+            return;
+        }
+        document.title = data.caption;
+        document.getElementById('og-title').setAttribute('content', data.caption);
+        document.getElementById('og-desc').setAttribute('content', data.caption);
+        document.getElementById('og-img').setAttribute('content', data.image_url);
+        document.getElementById('og-url').setAttribute('content', window.location.href);
+
+        postDetail.innerHTML = `
+            <img src="${data.image_url}" alt="ภาพ"><br>
+            <h2>${data.caption}</h2>
+            <a href="${data.affiliate_link}" target="_blank" class="affiliate-button">สนใจสินค้า คลิกเลย</a>
+        `;
+    }
+    loadPost();
+  </script>
+</body>
+</html>

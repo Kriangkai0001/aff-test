@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin - สร้างโพสต์ใหม่</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+</head>
+<body>
+  <h1>สร้างโพสต์ใหม่</h1>
+  <form id="post-form">
+    <label>เลือกรูปภาพ <input type="file" id="image_file" accept="image/*" required></label><br>
+    <label>แคปชั่น <input type="text" id="caption" required></label><br>
+    <label>Affiliate link <input type="text" id="affiliate_link" required></label><br>
+    <button type="submit" id="submit-btn">สร้างโพสต์</button>
+  </form>
+  <script src="main.js"></script>
+</body>
+</html>
